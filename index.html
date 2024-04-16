@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embed Iframe Example</title>
+    <style>
+        #myIframe {
+            min-width: 100%;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+<iframe  id="myIframe" src="https://tools.fluidbyte.io/app/test-lease-renewal-form/main-661298e81046c52060fee6b0?tenant_id=cHRfdGVuYW50XzMzNjEwMjA%3D&property_id=cHRfcHJvcGVydHlfMjExOTY1MQ%3D%3D" frameborder="0" allowfullscreen></iframe>
+
+<script src="./iframeResizer.min.js"></script>
+<script>
+
+    iFrameResize({ log: true}, '#myIframe')
+
+    const myIframe = document.getElementById('myIframe');
+
+    const brandBtn = "<a class=\"fixed hidden right-8 bottom-4 z-3 hover:no-underline md:flex\" href=\"https://appsmith.com\" rel=\"noreferrer\" target=\"_blank\">" +
+        "<span class=\"sc-gGfaQS hgbEqf flex items-center p-1 px-2 space-x-2 w-max backdrop-blur-xl backdrop-filter\">" +
+        "<h4 class=\"sc-bcXHqe gkCXlq ads-v2-text\" kind=\"span\">Built on Fluidbyte</h4></span></a>";
+
+    // Add event listener to wait for the iframe to load
+    myIframe.addEventListener('load', function() {
+        try {
+            const iFrameDoc = myIframe.contentDocument || myIframe.contentWindow.document;
+
+            const targetElement = iFrameDoc.querySelector('.fXFKDC');
+            if (targetElement) {
+                targetElement.innerHTML = brandBtn;
+            }
+
+            console.log(iFrameDoc);
+        } catch (e) {
+            console.error("Error accessing the iframe content: ", e);
+        }
+    });
+
+</script>
+</body>
+</html>
