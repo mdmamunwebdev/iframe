@@ -12,35 +12,42 @@
     </style>
 </head>
 <body>
-<iframe  id="myIframe" src="https://tools.fluidbyte.io/app/test-lease-renewal-form/main-661298e81046c52060fee6b0?tenant_id=cHRfdGVuYW50XzMzNjEwMjA%3D&property_id=cHRfcHJvcGVydHlfMjExOTY1MQ%3D%3D" frameborder="0" allowfullscreen></iframe>
-
 <script src="./iframeResizer.min.js"></script>
 <script>
+    // Dynamically create and append the iframe
+    document.addEventListener('DOMContentLoaded', function () {
+        var iframe = document.createElement('iframe');
+        iframe.id = 'myIframe';
+        iframe.style.width = '100%';
+        iframe.style.height = '100vh';
+        iframe.frameBorder = '0';
+        iframe.allowFullscreen = true;
+        iframe.src = 'https://tools.fluidbyte.io/app/test-lease-renewal-form/main-661298e81046c52060fee6b0?tenant_id=cHRfdGVuYW50XzMzNjEwMjA%3D&property_id=cHRfcHJvcGVydHlfMjExOTY1MQ%3D%3D';
+        document.body.appendChild(iframe);
 
-    iFrameResize({ log: true}, '#myIframe')
+        // Configure iframe resizer
+        iFrameResize({ log: true }, '#myIframe');
 
-    const myIframe = document.getElementById('myIframe');
+        iframe.addEventListener('load', function() {
+            try {
+                const iFrameDoc = iframe.contentDocument || iframe.contentWindow.document;
 
-    const brandBtn = "<a class=\"fixed hidden right-8 bottom-4 z-3 hover:no-underline md:flex\" href=\"https://appsmith.com\" rel=\"noreferrer\" target=\"_blank\">" +
-        "<span class=\"sc-gGfaQS hgbEqf flex items-center p-1 px-2 space-x-2 w-max backdrop-blur-xl backdrop-filter\">" +
-        "<h4 class=\"sc-bcXHqe gkCXlq ads-v2-text\" kind=\"span\">Built on Fluidbyte</h4></span></a>";
+                //  modification of the iframe's bottom btn
+                const brandBtn = "<a class='fixed hidden right-8 bottom-4 z-3 hover:no-underline md:flex' href='https://appsmith.com' rel='noreferrer' target='_blank'>" +
+                    "<span class='sc-gGfaQS hgbEqf flex items-center p-1 px-2 space-x-2 w-max backdrop-blur-xl backdrop-filter'>" +
+                    "<h4 class='sc-bcXHqe gkCXlq ads-v2-text' kind='span'>Built on Fluidbyte</h4></span></a>";
 
-    // Add event listener to wait for the iframe to load
-    myIframe.addEventListener('load', function() {
-        try {
-            const iFrameDoc = myIframe.contentDocument || myIframe.contentWindow.document;
+                const targetElement = iFrameDoc.querySelector('.fXFKDC');
+                if (targetElement) {
+                    targetElement.innerHTML = brandBtn;
+                }
 
-            const targetElement = iFrameDoc.querySelector('.fXFKDC');
-            if (targetElement) {
-                targetElement.innerHTML = brandBtn;
+                console.log(iFrameDoc);
+            } catch (e) {
+                console.error("Error accessing the iframe content: ", e);
             }
-
-            console.log(iFrameDoc);
-        } catch (e) {
-            console.error("Error accessing the iframe content: ", e);
-        }
+        });
     });
-
 </script>
 </body>
 </html>
